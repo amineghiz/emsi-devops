@@ -1,1 +1,4 @@
+#!/usr/bin/env bash
+#this line of code permits us to connect to our server 
+
 ssh -i ~/.ssh/holberton ubuntu@34.73.86.187
