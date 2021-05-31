@@ -1,3 +1,33 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@amineghiz 
+BENBRIKMouad
+/
+emsi-devops
+1
+02
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+emsi-devops/0x05-firewall/100-port_forwarding
+@BENBRIKMouad
+BENBRIKMouad firwall
+Latest commit 79a964e 29 days ago
+ History
+ 1 contributor
+82 lines (65 sloc)  2.7 KB
+  
 #
 # rules.before
 #
@@ -7,11 +37,13 @@
 #   ufw-before-output
 #   ufw-before-forward
 #
+
+# Don't delete these required lines, otherwise there will be errors
 *nat
 :PREROUTING ACCEPT [0:0]
 -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
-# Don't delete these required lines, otherwise there will be errors
+
 *filter
 :ufw-before-input - [0:0]
 :ufw-before-output - [0:0]
@@ -78,3 +110,16 @@ COMMIT
 
 # don't delete the 'COMMIT' line or these rules won't be processed
 COMMIT
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
