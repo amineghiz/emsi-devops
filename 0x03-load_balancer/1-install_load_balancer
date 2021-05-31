@@ -12,5 +12,5 @@ echo "frontend load-banlancer
 echo "backend web-backend
     balance roundrobin
     server 1863-web-01 34.73.86.187:80 check
-    server 1863-web-02 34.73.86.187:80 check" >> /etc/haproxy/haproxy.cfg
+    server 1863-web-02 34.75.123.226:80 check" >> /etc/haproxy/haproxy.cfg
 service haproxy restart

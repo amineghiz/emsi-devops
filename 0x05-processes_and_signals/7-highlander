@@ -1,15 +1,8 @@
 #!/usr/bin/env bash
-# Script receives kill signal from another script running in another terminal
-
-msg()
-{
-    echo "I am invincible!!!"
-}
-trap "msg" SIGTERM
-
+# script that displays To infinity and beyond indefinitely.
+trap 'echo "I am invincible!!!"' SIGTERM
 while true
 do
-    echo "To infinity and beyond"
-    sleep 2
-
+	echo "To infinity and beyond"
+	sleep 2
 done
