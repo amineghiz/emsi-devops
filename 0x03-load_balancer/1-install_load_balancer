@@ -1,15 +1,45 @@
 #!/usr/bin/env bash
 apt-get update
 apt-get -y install software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-2.0
-apt-get update
-apt-get -y install haproxy=2.0.\*
-echo "frontend load-banlancer
-    bind *:80
-    mode http
-    default_backend web-backend" >> /etc/haproxy/haproxy.cfg
-echo "backend web-backend
-    balance roundrobin
-    server 1863-web-01 34.73.86.187:80 check
-    server 1863-web-02 34.75.123.226:80 check" >> /etc/haproxy/haproxy.cfg
-service haproxy restart
+add-apt-repository ppa:vbernat/haproxy-2.1 --yes
+
+apt-get -y install haproxy 
+
+printf %s"global                                                                                                                            
+        log /dev/log    local0                                                                                                    
+        log /dev/log    local1 notice                                                                                             
+        chroot /var/lib/haproxy                                                                                                   
+        stats socket /run/haproxy/admin.sock mode 660 level admin                                                                 
+        stats timeout 30s                                                                                                         
+        user haproxy                                                                                                              
+        group haproxy                                                                                                             
+        daemon                                                                                                                    
+        ca-base /etc/ssl/certs                                                                                                    
+        crt-base /etc/ssl/private                                                                                                 
+                                                                                                                                  
+        ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS                                                                                                      
+        ssl-default-bind-options no-sslv3                                                                                         
+                                                                                                                                  
+defaults                                                                                                                          
+        log     global                                                                                                            
+        mode    http                                                                                                              
+        option  httplog                                                                                                           
+        option  dontlognull                                                                                                       
+        timeout connect 5000                                                                                                      
+        timeout client  50000                                                                                                     
+        timeout server  50000                                                                                                     
+        errorfile 400 /etc/haproxy/errors/400.http                                                                                
+        errorfile 403 /etc/haproxy/errors/403.http                                                                                
+        errorfile 408 /etc/haproxy/errors/408.http                                                                                
+        errorfile 500 /etc/haproxy/errors/500.http                                                                                
+        errorfile 502 /etc/haproxy/errors/502.http                                                                                
+        errorfile 503 /etc/haproxy/errors/503.http                                                                                
+        errorfile 504 /etc/haproxy/errors/504.http                                                                                
+listen www        
+   bind :80                                                                                                                  
+        balance roundrobin                                                                                                        
+        server gc-3129-web-02-1617751021 34.75.123.226 check                                                                     
+        server gc-3129-web-01-1618037739 34.73.86.187 check      
+" > /etc/haproxy/haproxy.cfg
+
+service haproxy start    
